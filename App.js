@@ -18,6 +18,7 @@ export default function App() {
       <ScrollView style={estilos.scroll}>
         <StatusBar barStyle="dark-content" />
         <View style={estilos.container}>
+          <Text style={estilos.titulo}>App 1 - Fotos de lugares visitados</Text>
           <TextInput style={estilos.input} placeholder="Título da foto/local" />
 
           <View style={estilos.viewFoto}>
@@ -49,6 +50,11 @@ const estilos = StyleSheet.create({
     flex: 1,
     padding: 8,
     backgroundColor: "#f7f7f7",
+  },
+  titulo: {
+    textAlign: "center",
+    fontSize: 20,
+    marginVertical: 8,
   },
   input: {
     height: 40,
