@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,6 +10,7 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
 export default function App() {
   return (
@@ -18,7 +20,7 @@ export default function App() {
         <View style={estilos.container}>
           <TextInput style={estilos.input} placeholder="Título da foto/local" />
 
-          <View>
+          <View style={estilos.viewFoto}>
             <Image></Image>
           </View>
 
@@ -26,7 +28,9 @@ export default function App() {
             <Text style={estilos.textoBotao}>Tirar Foto</Text>
           </Pressable>
 
-          <View></View>
+          <View style={estilos.viewMapa}>
+            <Text></Text>
+          </View>
 
           <Pressable style={estilos.botao}>
             <Text style={estilos.textoBotao}>Localizar no mapa</Text>
@@ -60,12 +64,26 @@ const estilos = StyleSheet.create({
     backgroundColor: "blue",
     width: "95%",
     marginLeft: 10,
-    marginVertical: 200,
+    marginVertical: 16,
   },
   textoBotao: {
     textAlign: "center",
     color: "white",
     fontSize: 16,
     textTransform: "uppercase",
+  },
+  viewFoto: {
+    borderWidth: 1,
+    height: 250,
+    width: 379,
+    marginLeft: 10,
+    marginVertical: 8,
+  },
+  viewMapa: {
+    borderWidth: 1,
+    height: 250,
+    width: 379,
+    marginLeft: 10,
+    marginVertical: 8,
   },
 });
