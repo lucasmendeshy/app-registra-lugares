@@ -10,10 +10,39 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+/* Import da lib ImagePicker */
 import * as ImagePicker from "expo-image-picker";
+/* Import da lib MapView/Marker */
+import MapView, { Marker } from "react-native-maps";
+/* Import da lib Location */
+import * as Location from "expo-location";
 
 export default function App() {
+  const [status, requestPermission] = ImagePicker.useCameraPermissions();
+  const [foto, setFoto] = useState();
+
+
+  /* Programação abaixo é dos recursos de câmera, tirar foto e da requisição de permissão de uso*/
+  useEffect(() => {
+    async function verificaPermissoes() {
+      const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
+      requestPermission(cameraStatus === "granted");
+    }
+    verificaPermissoes();
+  }, []);
+
+  const acessarCamera = async () => {
+    const imagem = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [16, 9],
+      quality: 0.5,
+    });
+    console.log(imagem);
+
+    setFoto(imagem.assets[0].uri);
+  };
   return (
+
     <SafeAreaView style={estilos.viewSafe}>
       <ScrollView style={estilos.scroll}>
         <StatusBar barStyle="dark-content" />
@@ -22,23 +51,30 @@ export default function App() {
           <TextInput style={estilos.input} placeholder="Título da foto/local" />
 
           <View style={estilos.viewFoto}>
-            <Image></Image>
+          {foto && (
+         <Image source={{ uri: foto }} style={{ width: 379, height: 250 }} />
+          )}
           </View>
 
-          <Pressable style={estilos.botao}>
+          <Pressable style={estilos.botao} onPress={acessarCamera}>
             <Text style={estilos.textoBotao}>Tirar Foto</Text>
           </Pressable>
 
           <View style={estilos.viewMapa}>
-            <Text></Text>
+            <MapView style={estilos.map}
+            mapType="satellite"
+            userInterfaceStyle="dark" 
+            />
           </View>
 
-          <Pressable style={estilos.botao}>
+          <Pressable style={estilos.botao} onPress={novaLocalizacao}>
             <Text style={estilos.textoBotao}>Localizar no mapa</Text>
           </Pressable>
+
         </View>
       </ScrollView>
     </SafeAreaView>
+    
   );
 }
 
@@ -92,4 +128,8 @@ const estilos = StyleSheet.create({
     marginLeft: 10,
     marginVertical: 8,
   },
+  map: {
+    width: 379,
+    height: 250
+  }
 });
