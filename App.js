@@ -42,7 +42,7 @@ export default function App() {
     setFoto(imagem.assets[0].uri);
   };
   return (
-
+     <>
     <SafeAreaView style={estilos.viewSafe}>
       <ScrollView style={estilos.scroll}>
         <StatusBar barStyle="dark-content" />
@@ -67,14 +67,14 @@ export default function App() {
             />
           </View>
 
-          <Pressable style={estilos.botao} onPress={novaLocalizacao}>
+          <Pressable style={estilos.botao}>
             <Text style={estilos.textoBotao}>Localizar no mapa</Text>
           </Pressable>
 
         </View>
       </ScrollView>
     </SafeAreaView>
-    
+    </>
   );
 }
 
