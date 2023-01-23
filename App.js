@@ -100,8 +100,10 @@ export default function App() {
           <View style={estilos.viewMapa}>
             <MapView
               style={estilos.map}
-              mapType="satellite"
+              mapType="standard"
               userInterfaceStyle="dark"
+              maxZoomLevel={15}
+              minZoomLevel={2}
               region={localizacao ?? regiaoInicial}
               onPress={(e) => {
                 setLocalizacao({
@@ -127,9 +129,11 @@ export default function App() {
             </MapView>
           </View>
 
-          <Pressable style={estilos.botao} onPress={marcarLocal}>
-            <Text style={estilos.textoBotao}>Localizar no mapa</Text>
-          </Pressable>
+          {minhaLocalizacao && (
+            <Pressable style={estilos.botao} onPress={marcarLocal}>
+              <Text style={estilos.textoBotao}>Salvar localização</Text>
+            </Pressable>
+          )}
         </ScrollView>
       </View>
     </>
