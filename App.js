@@ -78,9 +78,9 @@ export default function App() {
   };
   return (
     <>
-      <View style={estilos.container}>
-        <StatusBar barStyle="dark-content" />
-        <ScrollView style={estilos.scroll}>
+      <StatusBar barStyle="dark-content" />
+      <ScrollView style={estilos.scroll}>
+        <View style={estilos.container}>
           <Text style={estilos.titulo}>App 1 - Fotos de lugares visitados</Text>
           <TextInput style={estilos.input} placeholder="Título da foto/local" />
 
@@ -134,8 +134,8 @@ export default function App() {
               <Text style={estilos.textoBotao}>Salvar localização</Text>
             </Pressable>
           )}
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </>
   );
 }
