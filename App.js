@@ -19,9 +19,6 @@ import * as Location from "expo-location";
 import serverApi from "./servidor-api";
 
 export default function App() {
-  const [status, requestPermission] = ImagePicker.useCameraPermissions();
-  const [foto, setFoto] = useState();
-
   /* State para a geolocalização */
   const [minhaLocalizacao, setMinhaLocalizacao] = useState(null);
   const [localizacao, setLocalizacao] = useState();
@@ -61,7 +58,9 @@ export default function App() {
   /* -----------------------------------------------------------------------  */
 
   /* Programação abaixo é dos recursos de câmera, tirar foto e da requisição de permissão de uso*/
-  useEffect(() => {
+  const [status, requestPermission] = ImagePicker.useCameraPermissions();
+  const [foto, setFoto] = useState();
+  const [titulo, setTitulo] = useEffect(() => {
     async function verificaPermissoes() {
       const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
       requestPermission(cameraStatus === "granted");
