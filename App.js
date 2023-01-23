@@ -15,6 +15,8 @@ import * as ImagePicker from "expo-image-picker";
 import MapView, { Marker } from "react-native-maps";
 /* Import da lib Location */
 import * as Location from "expo-location";
+/* Import do serverApi */
+import serverApi from "./servidor-api";
 
 export default function App() {
   const [status, requestPermission] = ImagePicker.useCameraPermissions();
@@ -24,6 +26,7 @@ export default function App() {
   const [minhaLocalizacao, setMinhaLocalizacao] = useState(null);
   const [localizacao, setLocalizacao] = useState();
 
+  /* Programação abaixo é dos recursos de mapa e localização, e da requisição de permissão de uso*/
   useEffect(() => {
     async function obterLocalizacao() {
       // Acessando o status da requisição de permissão de uso
@@ -75,6 +78,35 @@ export default function App() {
     console.log(imagem);
 
     setFoto(imagem.assets[0].uri);
+    console.log(imagem);
+  };
+
+  const salvar = async (event) => {
+    const dados = {
+      foto, // caminho
+      //titulo
+      localizacao,
+    };
+
+    /*   event.preventDefault();
+
+    const opcoes = {
+      method: "POST",
+      body: JSON.stringify({ titulo }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    };
+
+    /* Script para envio dos dados a API */
+    // try {
+    //  await fetch(`${serverApi}app.json`, opcoes);
+    // } catch (error) {
+    // console.log("Deu ruim:" + error.message);
+    // } */
+
+    //setFoto(salvarImagem.assets[0].uri);
+    console.log(dados);
   };
   return (
     <>
@@ -92,6 +124,10 @@ export default function App() {
               />
             )}
           </View>
+
+          <Pressable style={estilos.botao} onPress={salvar}>
+            <Text style={estilos.textoBotao}>salvar</Text>
+          </Pressable>
 
           <Pressable style={estilos.botao} onPress={acessarCamera}>
             <Text style={estilos.textoBotao}>Tirar Foto</Text>

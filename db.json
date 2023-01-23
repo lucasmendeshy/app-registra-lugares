@@ -1,0 +1,7 @@
+{
+  "texto": [{ "id": 1, "título": "descrição" }],
+
+  "foto": [{ "id": 1, "foto": "Selfie tirada com sucesso" }],
+
+  "mapa": { "viewMapa": "Sua localização é está:" }
+}
