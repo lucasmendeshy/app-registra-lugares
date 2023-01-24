@@ -8,6 +8,7 @@ import {
   Pressable,
   ScrollView,
   Image,
+  Alert,
 } from "react-native";
 /* Import da lib ImagePicker */
 import * as ImagePicker from "expo-image-picker";
@@ -60,7 +61,13 @@ export default function App() {
   /* Programação abaixo é dos recursos de câmera, tirar foto e da requisição de permissão de uso*/
   const [status, requestPermission] = ImagePicker.useCameraPermissions();
   const [foto, setFoto] = useState();
-  const [titulo, setTitulo] = useEffect(() => {
+  const [titulo, setTitulo] = useState("");
+
+  const capturarTitulo = (event) => {
+    setTitulo(event.target.value);
+  };
+
+  useEffect(() => {
     async function verificaPermissoes() {
       const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
       requestPermission(cameraStatus === "granted");
@@ -74,38 +81,32 @@ export default function App() {
       aspect: [16, 9],
       quality: 0.5,
     });
-    console.log(imagem);
-
     setFoto(imagem.assets[0].uri);
-    console.log(imagem);
   };
 
-  const salvar = async (event) => {
-    const dados = {
-      foto, // caminho
-      //titulo
-      localizacao,
-    };
-
-    /*   event.preventDefault();
+  const salvar = async () => {
+    const teste1Objeto = { titulo, foto, localizacao };
+    console.log(typeof teste1Objeto);
 
     const opcoes = {
       method: "POST",
-      body: JSON.stringify({ titulo }),
+      body: JSON.stringify({
+        titulo: titulo,
+        foto: foto,
+        localizacao: localizacao,
+      }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     };
 
-    /* Script para envio dos dados a API */
-    // try {
-    //  await fetch(`${serverApi}app.json`, opcoes);
-    // } catch (error) {
-    // console.log("Deu ruim:" + error.message);
-    // } */
-
-    //setFoto(salvarImagem.assets[0].uri);
-    console.log(dados);
+    try {
+      await fetch(`${serverApi}/dados`, opcoes);
+      Alert.alert("Mensagem", "Dados enviados!");
+    } catch (error) {
+      console.log("Deu ruim:" + error.message);
+    }
+    // console.log(foto, titulo, localizacao);
   };
   return (
     <>
@@ -113,7 +114,11 @@ export default function App() {
       <ScrollView style={estilos.scroll}>
         <View style={estilos.container}>
           <Text style={estilos.titulo}>App 1 - Fotos de lugares visitados</Text>
-          <TextInput style={estilos.input} placeholder="Título da foto/local" />
+          <TextInput
+            style={estilos.input}
+            placeholder="Título da foto/local"
+            onChangeText={(valor) => setTitulo(valor)}
+          />
 
           <View style={estilos.viewFoto}>
             {foto && (
@@ -123,10 +128,6 @@ export default function App() {
               />
             )}
           </View>
-
-          <Pressable style={estilos.botao} onPress={salvar}>
-            <Text style={estilos.textoBotao}>salvar</Text>
-          </Pressable>
 
           <Pressable style={estilos.botao} onPress={acessarCamera}>
             <Text style={estilos.textoBotao}>Tirar Foto</Text>
@@ -166,9 +167,13 @@ export default function App() {
 
           {minhaLocalizacao && (
             <Pressable style={estilos.botao} onPress={marcarLocal}>
-              <Text style={estilos.textoBotao}>Salvar localização</Text>
+              <Text style={estilos.textoBotao}>Descobrir localização</Text>
             </Pressable>
           )}
+
+          <Pressable style={estilos.botao} onPress={salvar}>
+            <Text style={estilos.textoBotao}>salvar dados </Text>
+          </Pressable>
         </View>
       </ScrollView>
     </>

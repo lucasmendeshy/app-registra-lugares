@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "api": "json-server --host 10.20.45.39 db.json --port 2112"
   },
   "dependencies": {
     "expo": "~47.0.12",
